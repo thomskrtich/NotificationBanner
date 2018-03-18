@@ -314,7 +314,7 @@ public class BaseNotificationBanner: UIView {
                 }
             }
             
-            // MARK: Hacked Solution
+            // MARK: Put banner over statusBarView
             if !UIDevice.current.isiPhoneX {
                 UIApplication.shared.statusBarView?.addSubview(self)
             }
