@@ -314,6 +314,11 @@ public class BaseNotificationBanner: UIView {
                 }
             }
             
+            // MARK: Hacked Solution
+            if !UIDevice.current.isiPhoneX {
+                UIApplication.shared.statusBarView?.addSubview(self)
+            }
+            
             NotificationCenter.default.post(name: NotificationBanner.BannerWillAppear, object: self, userInfo: notificationUserInfo)
             delegate?.notificationBannerWillAppear(self)
             
@@ -449,3 +454,32 @@ public class BaseNotificationBanner: UIView {
     }
 }
 
+extension UIApplication {
+    
+    /// Returns the status bar UIView
+    var statusBarView: UIView? {
+        return value(forKey: "statusBar") as? UIView
+    }
+    
+}
+
+extension UIDevice {
+            
+    var isiPhoneX: Bool {
+            
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        switch identifier {
+        case "iPhone10,3", "iPhone10,6":
+            return true
+        default:
+            return false
+        }
+    }
+            
+}
