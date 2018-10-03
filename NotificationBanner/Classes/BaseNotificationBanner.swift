@@ -329,8 +329,8 @@ public class BaseNotificationBanner: UIView {
                 }
             }
             
-            // MARK: Put banner over statusBarView
-            if NotificationBannerUtilities.isNotchFeaturedIPhone() {
+            // MARK: FIX - Put banner over status bar for devices without safe areas.
+            if !NotificationBannerUtilities.isNotchFeaturedIPhone() {
                 UIApplication.shared.statusBarView?.addSubview(self)
             }
             
