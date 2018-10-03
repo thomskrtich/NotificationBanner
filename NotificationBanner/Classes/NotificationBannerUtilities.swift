@@ -33,3 +33,12 @@ class NotificationBannerUtilities: NSObject {
     }
     
 }
+
+extension UIApplication {
+    
+    /// Returns the status bar UIView
+    var statusBarView: UIView? {
+        return value(forKey: "statusBar") as? UIView
+    }
+    
+}
