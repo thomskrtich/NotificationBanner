@@ -1,7 +1,7 @@
 /*
  
  The MIT License (MIT)
- Copyright (c) 2017 Dalton Hinterscher
+ Copyright (c) 2017-2018 Dalton Hinterscher
  
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"),
  to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
@@ -43,7 +43,7 @@ public class BaseNotificationBanner: UIView {
             if let customBannerHeight = customBannerHeight {
                 return customBannerHeight
             } else {
-                return shouldAdjustForIphoneX() ? 88.0 : 64.0
+                return shouldAdjustForNotchFeaturedIphone() ? 88.0 : 64.0
             }
         } set {
             customBannerHeight = newValue
@@ -87,6 +87,9 @@ public class BaseNotificationBanner: UIView {
     
     /// Responsible for positioning and auto managing notification banners
     public var bannerQueue: NotificationBannerQueue = NotificationBannerQueue.default
+    
+    /// Banner dimiss animation duration
+    public var dismissDuration: TimeInterval = 0.5
     
     /// Wether or not the notification banner is currently being displayed
     public private(set) var isDisplaying: Bool = false
@@ -158,7 +161,7 @@ public class BaseNotificationBanner: UIView {
     
     deinit {
         NotificationCenter.default.removeObserver(self,
-                                                  name: NSNotification.Name.UIDeviceOrientationDidChange,
+                                                  name: UIDevice.orientationDidChangeNotification,
                                                   object: nil)
     }
     
@@ -199,7 +202,7 @@ public class BaseNotificationBanner: UIView {
      */
     
     private func updateSpacerViewHeight(make: ConstraintMaker? = nil) {
-        let finalHeight = NotificationBannerUtilities.isiPhoneX()
+        let finalHeight = NotificationBannerUtilities.isNotchFeaturedIPhone()
             && UIApplication.shared.statusBarOrientation.isPortrait
             && (parentViewController?.navigationController?.isNavigationBarHidden ?? true) ? 40.0 : 10.0
         if let make = make {
@@ -227,7 +230,7 @@ public class BaseNotificationBanner: UIView {
         NotificationCenter.default.post(name: NotificationBanner.BannerWillDisappear, object: self, userInfo: notificationUserInfo)
         delegate?.notificationBannerWillDisappear(self)
         
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: dismissDuration, animations: {
             self.frame = self.bannerPositionFrame.startFrame
         }) { (completed) in
             self.removeFromSuperview()
@@ -238,10 +241,22 @@ public class BaseNotificationBanner: UIView {
             
             self.bannerQueue.showNext(callback: { (isEmpty) in
                 if isEmpty || self.statusBarShouldBeShown() {
-                    self.appWindow.windowLevel = UIWindowLevelNormal
+                    self.appWindow.windowLevel = UIWindow.Level.normal
                 }
             })
         }
+    }
+    
+    /**
+        Removes the NotificationBanner from the queue if not displaying
+     */
+    public func remove() {
+        
+        guard !isDisplaying else {
+            return
+        }
+        
+        bannerQueue.removeBanner(self)
     }
     
     /**
@@ -288,11 +303,11 @@ public class BaseNotificationBanner: UIView {
         }
         
         NotificationCenter.default.removeObserver(self,
-                                                  name: NSNotification.Name.UIDeviceOrientationDidChange,
+                                                  name: UIDevice.orientationDidChangeNotification,
                                                   object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onOrientationChanged),
-                                               name: NSNotification.Name.UIDeviceOrientationDidChange,
+                                               name: UIDevice.orientationDidChangeNotification,
                                                object: nil)
         
         if placeOnQueue {
@@ -303,14 +318,14 @@ public class BaseNotificationBanner: UIView {
             if let parentViewController = parentViewController {
                 parentViewController.view.addSubview(self)
                 if statusBarShouldBeShown() {
-                    appWindow.windowLevel = UIWindowLevelNormal
+                    appWindow.windowLevel = UIWindow.Level.normal
                 }
             } else {
                 appWindow.addSubview(self)
                 if statusBarShouldBeShown() && !(parentViewController == nil && bannerPosition == .top) {
-                    appWindow.windowLevel = UIWindowLevelNormal
+                    appWindow.windowLevel = UIWindow.Level.normal
                 } else {
-                    appWindow.windowLevel = UIWindowLevelStatusBar + 1
+                    appWindow.windowLevel = UIWindow.Level.statusBar + 1
                 }
             }
             
@@ -321,6 +336,8 @@ public class BaseNotificationBanner: UIView {
             
             NotificationCenter.default.post(name: NotificationBanner.BannerWillAppear, object: self, userInfo: notificationUserInfo)
             delegate?.notificationBannerWillAppear(self)
+            
+            self.isDisplaying = true
             
             UIView.animate(withDuration: 0.5,
                            delay: 0.0,
@@ -335,7 +352,6 @@ public class BaseNotificationBanner: UIView {
                 NotificationCenter.default.post(name: NotificationBanner.BannerDidAppear, object: self, userInfo: self.notificationUserInfo)
                 self.delegate?.notificationBannerDidAppear(self)
                 
-                self.isDisplaying = true
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.onTapGestureRecognizer))
                 self.addGestureRecognizer(tapGestureRecognizer)
                 
@@ -438,11 +454,11 @@ public class BaseNotificationBanner: UIView {
     }
 
     /**
-         Determines wether or not we should adjust the banner for the iPhoneX
+         Determines wether or not we should adjust the banner for notch featured iPhone
      */
     
-    internal func shouldAdjustForIphoneX() -> Bool {
-        return NotificationBannerUtilities.isiPhoneX()
+    internal func shouldAdjustForNotchFeaturedIphone() -> Bool {
+        return NotificationBannerUtilities.isNotchFeaturedIPhone()
             && UIApplication.shared.statusBarOrientation.isPortrait
             && (self.parentViewController?.navigationController?.isNavigationBarHidden ?? true)
     }
