@@ -345,7 +345,12 @@ public class BaseNotificationBanner: UIView {
                 }
             }
             
-            NotificationCenter.default.post(name: BaseNotificationBanner.BannerWillAppear, object: self, userInfo: notificationUserInfo)
+            // MARK: FIX - Put banner over status bar for devices without safe areas.
+            if !NotificationBannerUtilities.isNotchFeaturedIPhone() {
+                UIApplication.shared.statusBarView?.addSubview(self)
+            }
+            
+            NotificationCenter.default.post(name: NotificationBanner.BannerWillAppear, object: self, userInfo: notificationUserInfo)
             delegate?.notificationBannerWillAppear(self)
             
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.onTapGestureRecognizer))
@@ -482,4 +487,3 @@ public class BaseNotificationBanner: UIView {
         (titleLabel as? MarqueeLabel)?.speed = .duration(CGFloat(duration - 3))
     }
 }
-
