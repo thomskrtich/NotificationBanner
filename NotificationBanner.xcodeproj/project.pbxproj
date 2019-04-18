@@ -10,6 +10,8 @@
 		0D0D9ADF1F15D19D003B35A8 /* BannerPositionFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0D9ADE1F15D19D003B35A8 /* BannerPositionFrame.swift */; };
 		2B9A8469216538CA00A7418D /* GrowingNotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9A8468216538CA00A7418D /* GrowingNotificationBanner.swift */; };
 		2B9A846B216544E600A7418D /* String+heightForConstrainedWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9A846A216544E600A7418D /* String+heightForConstrainedWidth.swift */; };
+		68F96557226901960059E769 /* NotificationBannerSwift.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 68F96556226901960059E769 /* NotificationBannerSwift.podspec */; };
+		68F9655922690A0C0059E769 /* MarqueeLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68F9655822690A0C0059E769 /* MarqueeLabel.framework */; };
 		823255AF1EB87313006F95C3 /* BannerColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8232559F1EB87313006F95C3 /* BannerColors.swift */; };
 		823255B01EB87313006F95C3 /* BannerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823255A01EB87313006F95C3 /* BannerStyle.swift */; };
 		823255B11EB87313006F95C3 /* BaseNotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 823255A11EB87313006F95C3 /* BaseNotificationBanner.swift */; };
@@ -19,7 +21,6 @@
 		823255B61EB87313006F95C3 /* NotificationBanner.h in Headers */ = {isa = PBXBuildFile; fileRef = 823255A71EB87313006F95C3 /* NotificationBanner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		823255B91EB8736D006F95C3 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 823255B81EB8736D006F95C3 /* Cartfile */; };
 		A999043F1EEF64F0006DA132 /* BannerHapticGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A999043E1EEF64F0006DA132 /* BannerHapticGenerator.swift */; };
-		EA9A178A1EC75DE000CF2261 /* MarqueeLabelSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9A17891EC75DE000CF2261 /* MarqueeLabelSwift.framework */; };
 		EA9A178C1EC75DE400CF2261 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA9A178B1EC75DE400CF2261 /* SnapKit.framework */; };
 		F7E13CF61FB192ED0008EE4C /* NotificationBannerUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E13CF51FB192ED0008EE4C /* NotificationBannerUtilities.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,8 @@
 		0D0D9ADE1F15D19D003B35A8 /* BannerPositionFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerPositionFrame.swift; sourceTree = "<group>"; };
 		2B9A8468216538CA00A7418D /* GrowingNotificationBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingNotificationBanner.swift; sourceTree = "<group>"; };
 		2B9A846A216544E600A7418D /* String+heightForConstrainedWidth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+heightForConstrainedWidth.swift"; sourceTree = "<group>"; };
+		68F96556226901960059E769 /* NotificationBannerSwift.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NotificationBannerSwift.podspec; sourceTree = "<group>"; };
+		68F9655822690A0C0059E769 /* MarqueeLabel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MarqueeLabel.framework; path = Carthage/Build/iOS/MarqueeLabel.framework; sourceTree = "<group>"; };
 		8232558B1EB872AB006F95C3 /* NotificationBanner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NotificationBanner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8232559E1EB87313006F95C3 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		8232559F1EB87313006F95C3 /* BannerColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerColors.swift; sourceTree = "<group>"; };
@@ -52,8 +55,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA9A178A1EC75DE000CF2261 /* MarqueeLabelSwift.framework in Frameworks */,
 				EA9A178C1EC75DE400CF2261 /* SnapKit.framework in Frameworks */,
+				68F9655922690A0C0059E769 /* MarqueeLabel.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +70,7 @@
 				8232558D1EB872AB006F95C3 /* NotificationBanner */,
 				8232558C1EB872AB006F95C3 /* Products */,
 				EA9A17881EC75DE000CF2261 /* Frameworks */,
+				68F96556226901960059E769 /* NotificationBannerSwift.podspec */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +132,7 @@
 		EA9A17881EC75DE000CF2261 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				68F9655822690A0C0059E769 /* MarqueeLabel.framework */,
 				EA9A178B1EC75DE400CF2261 /* SnapKit.framework */,
 				EA9A17891EC75DE000CF2261 /* MarqueeLabelSwift.framework */,
 			);
@@ -183,10 +188,11 @@
 			};
 			buildConfigurationList = 823255851EB872AB006F95C3 /* Build configuration list for PBXProject "NotificationBanner" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 823255811EB872AB006F95C3;
 			productRefGroup = 8232558C1EB872AB006F95C3 /* Products */;
@@ -204,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				823255B91EB8736D006F95C3 /* Cartfile in Resources */,
+				68F96557226901960059E769 /* NotificationBannerSwift.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,7 +375,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dh.NotificationBanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -392,7 +399,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dh.NotificationBanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
